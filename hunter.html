@@ -1,0 +1,88 @@
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    #image-list {
+      display: flex;
+      flex-wrap: wrap;
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+    .image-item {
+      flex: 1 0 calc(50% - 22px);
+      align-items: center;
+      align-content: center;
+      display: flex;
+      flex-direction: column;
+      margin: 10px;
+      font-size: x-large;
+      border: 1px solid black;
+    }
+    .image-item img {
+      width: 30vw;
+      height: auto;
+      display: block;
+    }
+</style>
+<body>
+  <ul id="image-list"></ul>
+</body>
+<script>
+peeps = [{
+        id:"029430",
+        name:"Blue Peep",
+        image:"https://www.buildabear.com/dw/image/v2/BBNG_PRD/on/demandware.static/-/Sites-buildabear-master/default/dw7848237f/60231221229430x20026011.jpg?sw=800&sh=800&sm=fit"
+    },
+    {
+        id:"029431",
+        name:"Pink Peep",
+        image:"https://www.buildabear.com/dw/image/v2/BBNG_PRD/on/demandware.static/-/Sites-buildabear-master/default/dwf37b9cfd/92231221229431x20026013.jpg?sw=800&sh=800&sm=fit",
+    },
+    {
+        id:"031441",
+        name:"Party Cake Peep",
+        image:"https://www.buildabear.com/dw/image/v2/BBNG_PRD/on/demandware.static/-/Sites-buildabear-master/default/dw31d3d95f/82231221231441x20038012.jpg?sw=800&sh=800&sm=fit"
+    },
+    {
+        id:"029432",
+        name:"Yellow Peep",
+        image:"https://www.buildabear.com/dw/image/v2/BBNG_PRD/on/demandware.static/-/Sites-buildabear-master/default/dw903ada00/09231221229432x20026016.jpg?sw=800&sh=800&sm=fit"
+    },
+    {
+        id:"030013",
+        name:"Orange Peep",
+        image:"https://www.buildabear.com/dw/image/v2/BBNG_PRD/on/demandware.static/-/Sites-buildabear-master/default/dw6005d360/08231221230013x20032019.jpg?sw=800&sh=800&sm=fit"
+    },
+    {
+        id:"032190",
+        name:"Cotton Candy Peep",
+        image:"https://www.buildabear.com/dw/image/v2/BBNG_PRD/on/demandware.static/-/Sites-buildabear-master/default/dw05e73cd6/98230702232190~x20010078.jpg?sw=800&sh=800&sm=fit"
+    },
+]
+peeps.forEach(peep => {
+    const listItem = document.createElement('li');
+    listItem.className = 'image-item';
+
+    const name = document.createElement('b');
+    name.innerHTML= peep.name
+    listItem.appendChild(name);
+
+    const image = document.createElement('img');
+    image.src = peep.image;
+    listItem.appendChild(image);
+
+    const stock = document.createElement('div');
+    stock.innerHTML="SEARCHING..."
+    url="https://www.buildabear.com/on/demandware.store/Sites-buildabear-us-Site/en_US/Stores-FindStores?showMap=false&radius=75&isPDP=true&isPLP=false&isCheckout=false&isCart=false&allPids=%5B%22"+peep.id+"%22%5D&lat=40.748937&long=-73.986433"
+    $.get(url, function( data ) {
+        stock.innerHTML= data["stores"][0]["inventoryMsg"]
+    });
+    listItem.appendChild(stock);
+
+    document.getElementById("image-list").appendChild(listItem);
+});
+</script>
